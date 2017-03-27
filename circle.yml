@@ -1,0 +1,16 @@
+version: 2
+jobs:
+    build:
+        working_directory: /go/src/github.com/kai-zoa/ciji
+        docker:
+            - image: golang:latest
+              environment:
+                  GO15VENDOREXPERIMENT: 1
+        steps:
+            - checkout
+            - run:
+                name: "ciji"
+                command: |
+                    go get -u github.com/golang/dep/...
+                    dep ensure
+                    go build -a -o ciji ./*.go

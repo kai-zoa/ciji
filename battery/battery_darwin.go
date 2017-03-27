@@ -8,12 +8,12 @@ import (
 )
 
 func New() Battery {
-	return &darwinBattery{}
+	return &pmsetBattery{}
 }
 
-type darwinBattery struct{}
+type pmsetBattery struct{}
 
-func (b *darwinBattery) RemainingCapacities() int {
+func (b *pmsetBattery) RemainingCapacities() int {
 	var err error
 	out, err := exec.Command("pmset", "-g", "batt").Output()
 	if err != nil {
