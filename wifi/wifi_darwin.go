@@ -24,12 +24,19 @@ type macOSAirport struct {
 
 func (w *macOSAirport) SSID() string {
 	w.update()
-	return w.data["SSID"]
+	ssid := w.data["SSID"]
+	if ssid == "" {
+		return "Wi-Fi:Off"
+	}
+	return ssid
 }
 
 func (w *macOSAirport) Intensity() float64 {
 	w.update()
 	rssi := w.data["agrCtlRSSI"]
+	if rssi == "" {
+		return 0.0
+	}
 	n, err := strconv.Atoi(rssi)
 	if err != nil {
 		panic(errors.Wrap(err, ""))
